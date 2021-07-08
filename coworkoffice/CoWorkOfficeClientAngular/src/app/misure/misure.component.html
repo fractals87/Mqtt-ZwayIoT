@@ -1,0 +1,55 @@
+<app-jumbotron [Titolo]="'Ricerca Misure'" [SottoTitolo]="'Ricerca gli misure per descrizione '" [Show]="false"></app-jumbotron>
+
+<section class="container">
+<div class="table-wrapper"> 
+    <div class="table-title">
+        <div class="row">
+            <div class="col-sm-5">
+              <h2>Risultati Ricerca: <small>Trovati {{NumMis}} Misure</small></h2>
+            </div>
+        </div>
+    </div>
+    <div class="table-filter">
+      	<div class="row">
+            <div class="col-sm-3">
+
+            </div>
+            <div class="col-sm-9">
+              <button type="button" (click) = "refresh()" class="btn btn-primary"><i class="fa fa-search"></i></button>
+              <div class="filter-group">
+                  <label>Filtro: </label>
+                  <input type="text" class="form-control" [(ngModel)] = "filter">
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-success" *ngIf='messaggio'>
+      {{messaggio}}
+  </div>    
+    <table id="misure" class="table table-striped table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Valore</th>
+          <th>Stanza</th>
+          <th>Device</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let misura of misure | paginate: { itemsPerPage: righe, currentPage: pagina }">
+            <td>{{misura.data | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+            <td>{{misura.valore}}</td>
+            <td>{{misura.room}}</td>
+            <td>{{misura.iotdevice}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="clearfix">
+      <pagination-controls 
+      (pageChange)="pagina = $event"
+      previousLabel="Precedente"
+      nextLabel="Successivo">
+      </pagination-controls>
+    </div>
+</div>
+</section>

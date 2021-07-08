@@ -1,0 +1,40 @@
+<app-jumbotron [Titolo]="'I miei device'" [SottoTitolo]="'I miei device'" [Show]="false"></app-jumbotron>
+
+<section class="container">
+<div class="table-wrapper"> 
+    <div class="table-title">
+        <div class="row">
+            <div class="col-sm-5">
+              <h2>Risultati Ricerca: <small>Trovati {{NumD}} device</small></h2>
+            </div>
+        </div>
+    </div>  
+    <table id="gateways" class="table table-striped table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Descrizione</th>
+          <th>Tipo device</th>
+          <th>Tipo sonda</th>
+          <th>Reg ID</th>
+          <th>Stanza</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let deviceiot of devicesiot | paginate: { itemsPerPage: righe, currentPage: pagina }">
+            <td>{{deviceiot.description}}</td>
+            <td>{{deviceiot.deviceType}}</td>
+            <td>{{deviceiot.probeType}}</td>
+            <td>{{deviceiot.registrationIdentifier}}</td>
+            <td>{{deviceiot.room}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="clearfix">
+      <pagination-controls 
+      (pageChange)="pagina = $event"
+      previousLabel="Precedente"
+      nextLabel="Successivo">
+      </pagination-controls>
+    </div>
+</div>
+</section>

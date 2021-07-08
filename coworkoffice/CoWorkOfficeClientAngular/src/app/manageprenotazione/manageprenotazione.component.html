@@ -1,0 +1,59 @@
+<app-jumbotron [Titolo]="'Prenotazione'" [SottoTitolo]="'Inserisci o modifica prenotazione'" [Show]="false"></app-jumbotron>
+
+<section class="container">
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+          <div class="caption font-red-sunglo">
+            <i class="oi oi-pencil"></i>  
+            <span class="caption-subject bold uppercase"> Dati Prenotazione</span>
+          </div>
+        </div>
+         <!--Inizio del form di inserimento dati-->
+        <div class="alert alert-success" *ngIf='Conferma'>
+          {{Conferma}}
+        </div>
+        <div class="alert alert-danger" *ngIf='Errore'>
+          {{Errore}}
+        </div>
+        <div class="portlet-body form">
+          <form (ngSubmit)="prenotazioneForm.valid && salva()" #prenotazioneForm="ngForm">
+            <div class="form-body">
+                <input name="id"  type="hidden" [(ngModel)]="prenotazione.id" class="form-control" [readonly]="this.IsModifica" placeholder="Codice Prenotazione" required #id="ngModel"/>
+
+                <div class="form-group">
+                  <label for="da">Data da</label>
+                  <input name="da" [(ngModel)]="prenotazione.da" type="text" class="form-control date" [readonly]="this.IsModifica" placeholder="Data da"
+                    required  #da="ngModel"/> 
+                </div>
+
+                <div class="form-group">
+                    <label for="a">Data a</label>
+                    <input name="a" [(ngModel)]="prenotazione.a" type="text" class="form-control" [readonly]="this.IsModifica" placeholder="Data a"
+                      required  #a="ngModel"/> 
+                </div>
+  
+                <div class="form-group">
+                    <label for="clienti">Clienti attesi</label>
+                    <input name="clienti" [(ngModel)]="prenotazione.clienti" type="text" class="form-control" placeholder="Clienti attesi"
+                      required  #clienti="ngModel"/> 
+                </div>
+
+                <div class="form-group">
+                  <label for="idRoom">Ufficio:</label>
+                  <select name="idRoom" class="form-control" [disabled]="this.IsModifica" [(ngModel)]="prenotazione.idroom">
+                    <option [value]="room.id" *ngFor="let room of rooms">{{room.description}}</option> 
+                  </select>
+                </div>
+                
+                <hr class="line-form">
+
+                <button type="submit" id="btnAdd" class="btn btn-primary form-buttons" [disabled]="prenotazioneForm.invalid">
+                  <i class="fa fa-floppy-o" aria-hidden="true"></i>  Salva
+                </button>
+
+            </div>
+          </form>          
+        </div>
+    </div>
+</section>
+

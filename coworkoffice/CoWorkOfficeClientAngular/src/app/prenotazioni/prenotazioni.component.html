@@ -1,0 +1,54 @@
+<app-jumbotron [Titolo]="'Le mie prenotazioni'" [SottoTitolo]="'Le mie prenotazioni'" [Show]="false"></app-jumbotron>
+
+<section class="container">
+<div class="table-wrapper"> 
+    <div class="table-title">
+        <div class="row">
+            <div class="col-sm-5">
+              <h2>Risultati Ricerca: <small>Trovati {{NumMis}} Prenotazioni</small></h2>
+            </div>
+            <div class="col-sm-7">	
+              <button style="margin-left: 20px;" class="btn btn-success float-right" (click)="Modifica('-1')">Nuova prenotazione</button>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-success" *ngIf='messaggio'>
+      {{messaggio}}
+  </div>    
+    <table id="prenotazioni" class="table table-striped table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Da</th>
+          <th>A</th>
+          <th>Ufficio</th>
+          <th>Clienti attesi</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let prenotazione of prenotazioni | paginate: { itemsPerPage: righe, currentPage: pagina }">
+            <td>{{prenotazione.da}}</td>
+            <td>{{prenotazione.a}}</td>
+            <td>{{prenotazione.room}}</td>
+            <td>{{prenotazione.clienti}}</td>
+            <td>
+              <button (click)="Modifica(prenotazione.id)" class="btn btn-warning table-buttons">
+              <span class="oi oi-pencil"></span> Modifica</button>
+            </td>
+            <td>
+              <button (click)="deletePrenotazione(prenotazione.id)" class="btn btn-warning table-buttons">
+              <span class="oi oi-x"></span> Cancella</button>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="clearfix">
+      <pagination-controls 
+      (pageChange)="pagina = $event"
+      previousLabel="Precedente"
+      nextLabel="Successivo">
+      </pagination-controls>
+    </div>
+</div>
+</section>

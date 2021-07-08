@@ -1,0 +1,51 @@
+<app-jumbotron [Titolo]="'I miei gateways'" [SottoTitolo]="'I miei gateways'" [Show]="false"></app-jumbotron>
+
+<section class="container">
+<div class="table-wrapper"> 
+    <div class="table-title">
+        <div class="row">
+            <div class="col-sm-5">
+              <h2>Risultati Ricerca: <small>Trovati {{NumG}} gateways</small></h2>
+            </div>
+            <div class="col-sm-7">	
+              <button style="margin-left: 20px;" class="btn btn-success float-right" (click)="Configure()">Invia config MQTT</button>
+          </div>
+        </div>
+
+    </div>  
+    <table id="gateways" class="table table-striped table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Descrizione</th>
+          <th>Protocollo</th>
+          <th>Ip</th>
+          <th>porta</th>
+          <th>user</th>
+          <th>Password</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let gateway of gateways | paginate: { itemsPerPage: righe, currentPage: pagina }">
+            <td>{{gateway.description}}</td>
+            <td>{{gateway.protocol}}</td>
+            <td>{{gateway.ip}}</td>
+            <td>{{gateway.port}}</td>
+            <td>{{gateway.user}}</td>
+            <td>{{gateway.password}}</td>
+            <td>
+              <button (click)="VisDevIoT(gateway.id)" class="btn btn-warning table-buttons">
+              <span class="oi oi-pencil"></span> Dettagli</button>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="clearfix">
+      <pagination-controls 
+      (pageChange)="pagina = $event"
+      previousLabel="Precedente"
+      nextLabel="Successivo">
+      </pagination-controls>
+    </div>
+</div>
+</section>
